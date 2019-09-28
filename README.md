@@ -1,21 +1,13 @@
 # RESTFUL_API_POINT_OF_SALES
 
----
 ## Table of Contents
-- [RESTFUL_API_POINT_OF_SALES](#restfulapipointofsales)
-  - [Table of Contents](#table-of-contents)
-  - [- Dependencies](#dependencies)
-  - [Introduction](#introduction)
-  - [- Login and Register With JWT](#login-and-register-with-jwt)
-  - [Tools](#tools)
-  - [- Postman](#postman)
-  - [Installation](#installation)
-    - [Clone](#clone)
-    - [Create Environment Variable](#create-environment-variable)
-    - [Start Development Server](#start-development-server)
-  - [Dependencies](#dependencies)
+- [Introduction](#introduction)
+- [Tools](#Tools)
+- [Installation](#Installation)
+- [Dependencies](#Dependencies)
+- [Route](#Route)
 ---
-
+ 
 ## Introduction
 RESTFUL API POINT OF SALES is an app point of sales system. the main features are: 
 - CRUD Products
@@ -69,3 +61,30 @@ $ npm start
 - express
 - express-fileupload
 - jsonwebtoken
+
+
+
+
+
+
+
+## Route
+
+- Users
+  - (POST) http://localhost:4000/users/register Register users
+  - (POST) http://localhost:4000/users/login login users
+  - (GET)  http://localhost:4000/users Get data users
+  
+- Categori
+  - (GET) http://localhost:4000/api/v1/categories/ Get all categories
+  - (GET) http://localhost:4000/api/v1/categories/5 Get categori by ID categori
+  - (POST) http://localhost:4000/api/v1/categories Add data categori
+  - (PUT) http://localhost:4000/api/v1/categories/5 Edit data categori
+  - (DELETE) http://localhost:4000/api/v1/categories/5 Delete data categori
+
+- Products
+  - (GET) http://localhost:4000/api/v1/products Get all products
+  - (GET) http://localhost:4000/api/v1/products/6 Get product by ID product 
+  - (POST) http://localhost:4000/api/v1/products/ Add data product
+  - (PUT) http://localhost:4000/api/v1/products/6 Edit data product
+  - (DELETE) http://localhost:4000/api/v1/products/6 Delete data product
