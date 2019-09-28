@@ -9,8 +9,6 @@ module.exports = {
         req.query.searchByName ? search = `'${req.query.searchByName}'` : search = "''"
         req.query.byProduct && req.query.sort ? sorting = `a.${req.query.byProduct} ${req.query.sort}` : sorting = `a.idProduct`
 
-        console.log(sorting)
-
         let page = (req.query.pages) ? pages = parseInt(req.query.pages, 10) : pages = 1
         let off = ((page - 1) * 5)
         let lim = (req.query.pages) ? 5 : 20
