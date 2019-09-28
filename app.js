@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser') // for parsing req.body
 const logger = require('morgan')
 const fileUpload = require('express-fileupload');
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 
 require('dotenv').config()
 

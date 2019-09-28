@@ -75,8 +75,8 @@ module.exports = {
                 })
                 .catch(err => {
                     console.log(err)
-                    res.status(400).json({
-                        status: 400,
+                    res.status(500).json({
+                        status: 500,
                         message: 'erro adding new data product'
                     })
                 })
@@ -108,8 +108,8 @@ module.exports = {
                 })
                 .catch(err => {
                     console.log(err)
-                    res.status(400).json({
-                        status: 400,
+                    res.status(500).json({
+                        status: 500,
                         message: 'erro edit data product'
                     })
                 })
@@ -137,8 +137,8 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err)
-                res.status(400).json({
-                    status: 400,
+                res.status(500).json({
+                    status: 500,
                     message: 'erro add quantity data product'
                 })
             })
@@ -161,8 +161,8 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err)
-                res.status(400).json({
-                    status: 400,
+                res.status(500).json({
+                    status: 500,
                     message: 'erro reduce quantity data product'
                 })
             })
@@ -181,8 +181,8 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err)
-                res.status(400).json({
-                    status: 400,
+                res.status(500).json({
+                    status: 500,
                     message: 'erro delete data product'
                 })
             })

@@ -5,6 +5,7 @@ const Route = express.Router()
 const usersController = require('../controller/users')
 
 Route
+    // .get('/', usersController.getUsers)
     .post('/register', usersController.register)
     .post('/login', usersController.login)
 

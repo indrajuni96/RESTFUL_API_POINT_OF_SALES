@@ -35,13 +35,9 @@ module.exports = {
                 console.log(err)
                 res.json({
                     status: 500,
-                    message: 'erro getting data product from database'
+                    message: 'erro getting data categori from database'
                 })
             })
-        // res.json({
-        //     status: 200,
-        //     message: 'Success get all data'
-        // })
     },
     addCategori: (req, res) => {
         const { name } = req.body

@@ -9,6 +9,23 @@ const jwtPrivateKey = 'jwtsecret'
 
 
 module.exports = {
+    getUsers: (req, res) => {
+        usersModel.getUsers()
+            .then(resultQuery => {
+                res.json({
+                    status: 200,
+                    message: 'success getting data users from database',
+                    data: resultQuery
+                })
+            })
+            .catch(err => {
+                console.log(err)
+                res.json({
+                    status: 500,
+                    message: 'erro getting data users from database'
+                })
+            })
+    },
     register: (req, res) => {
         let email = req.body.email
         let password = req.body.password
