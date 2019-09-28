@@ -2,10 +2,18 @@
 
 ---
 ## Table of Contents
-- [Introduction](#Introduction)
-- [Tools](#Tools)
-- [Installation](#Installation)
-- [Dependencies](#Dependencies)
+- [RESTFUL_API_POINT_OF_SALES](#restfulapipointofsales)
+  - [Table of Contents](#table-of-contents)
+  - [- Dependencies](#dependencies)
+  - [Introduction](#introduction)
+  - [- Login and Register With JWT](#login-and-register-with-jwt)
+  - [Tools](#tools)
+  - [- Postman](#postman)
+  - [Installation](#installation)
+    - [Clone](#clone)
+    - [Create Environment Variable](#create-environment-variable)
+    - [Start Development Server](#start-development-server)
+  - [Dependencies](#dependencies)
 ---
 
 ## Introduction
@@ -19,6 +27,7 @@ RESTFUL API POINT OF SALES is an app point of sales system. the main features ar
 - Cannot reduce order below 0 (-1,-5,etc)
 - Allowed CORS
 - Login and Register With JWT
+---
 
 ## Tools
 - XAMPP
@@ -26,6 +35,7 @@ RESTFUL API POINT OF SALES is an app point of sales system. the main features ar
 - Node.js
 - Terminal
 - Postman
+---
 
 ## Installation
 
