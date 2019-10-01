@@ -14,9 +14,9 @@ module.exports = {
                 })
         })
     },
-    getCategoriId: (dataId) => {
+    getCategoriId: (idCategori) => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT * FROM categories where idCategori = ?', dataId, (err, result) => {
+            conn.query('SELECT * FROM categories where idCategori = ?', idCategori, (err, result) => {
 
                 if (!err) {
                     resolve(result)
@@ -37,9 +37,9 @@ module.exports = {
             })
         })
     },
-    editCategori: (data, dataIdCategori) => {
+    editCategori: (data, idCategori) => {
         return new Promise((resolve, reject) => {
-            conn.query('UPDATE categories SET ? WHERE ?', [data, dataIdCategori], (err, result) => { //preparete statement
+            conn.query('UPDATE categories SET ? WHERE idCategori = ?', [data, idCategori], (err, result) => { //preparete statement
                 if (!err) {
                     resolve(result)
                 } else {
@@ -48,9 +48,9 @@ module.exports = {
             })
         })
     },
-    deleteCategori: (data) => {
+    deleteCategori: (idCategori) => {
         return new Promise((resolve, reject) => {
-            conn.query('DELETE FROM categories WHERE idCategori = ?', data, (err, result) => { //preparete statement
+            conn.query('DELETE FROM categories WHERE idCategori = ?', idCategori, (err, result) => { //preparete statement
                 if (!err) {
                     resolve(result)
                 } else {

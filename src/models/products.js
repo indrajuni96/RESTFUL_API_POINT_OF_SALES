@@ -50,9 +50,9 @@ module.exports = {
             })
         })
     },
-    addProductQuantity: (data, dataIdProduct) => {
+    getQuantity: (idProduct) => {
         return new Promise((resolve, reject) => {
-            conn.query('UPDATE products SET quantity = quantity+?, dateUpdated=? WHERE ?', [data, new Date, dataIdProduct], (err, result) => { //preparete statement
+            conn.query('SELECT quantity FROM products where idProduct = ?', idProduct, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
@@ -61,31 +61,53 @@ module.exports = {
             })
         })
     },
-    reduceProductQuantity: (data, dataIdProduct) => {
+    addProductQuantity: (data, IdProduct) => {
         return new Promise((resolve, reject) => {
-
-            conn.query('SELECT quantity FROM products WHERE ? ', dataIdProduct, (err, result) => {
-
-                const numQuantity = result[0].quantity - data
-
-                if (numQuantity >= 0) {
-                    conn.query(`UPDATE products SET quantity = quantity-?, dateUpdated=? WHERE ?`, [data, new Date, dataIdProduct], (err, result) => {
-                        if (!err) {
-                            resolve('Success reduce quantity product')
-                        } else {
-                            reject(err)
-                        }
-                    })
+            conn.query('UPDATE products SET quantity = quantity+?, dateUpdated = ? WHERE idProduct = ?', [data.quantity, data.dateUpdated, IdProduct], (err, result) => { //preparete statement
+                if (!err) {
+                    resolve(result)
                 } else {
-                    resolve('Quantity below -1')
+                    reject(err)
                 }
-
             })
         })
     },
-    deleteProduct: (data) => {
+    // reduceProductQuantity: (idProduct, quantity) => {
+    //     return new Promise((resolve, reject) => {
+
+    //         conn.query('SELECT quantity FROM products WHERE idProduct = ? ', idProduct, (err, result) => {
+
+    //             const numQuantity = result[0].quantity - quantity
+
+    //             if (numQuantity >= 0) {
+    //                 conn.query(`UPDATE products SET quantity = ?, dateUpdated=? WHERE idProduct = ?`, [numQuantity, new Date, idProduct], (err, result) => {
+    //                     if (!err) {
+    //                         resolve(result)
+    //                     } else {
+    //                         reject(err)
+    //                     }
+    //                 })
+    //             } else {
+    //                 reject('cannot Quantity below 0')
+    //             }
+
+    //         })
+    //     })
+    // },
+    reduceProductQuantity: (idProduct, quantity) => {
         return new Promise((resolve, reject) => {
-            conn.query('DELETE FROM products WHERE idProduct = ?', data, (err, result) => { //preparete statement
+            conn.query('UPDATE products SET quantity = ? WHERE idProduct = ?', [quantity, idProduct], (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(err)
+                }
+            })
+        })
+    },
+    deleteProduct: (idProduct) => {
+        return new Promise((resolve, reject) => {
+            conn.query('DELETE FROM products WHERE idProduct = ?', idProduct, (err, result) => { //preparete statement
                 if (!err) {
                     resolve(result)
                 } else {

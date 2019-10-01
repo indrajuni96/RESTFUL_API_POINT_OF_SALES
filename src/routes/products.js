@@ -4,10 +4,10 @@ const cors = require('cors')
 
 // import controller
 const productsController = require('../controller/products')
-const usersController = require('../controller/users')
+const middleware = require('../helpers/auth')
 
 Route
-    .get('/products', cors(), productsController.getProducts)
+    .get('/products', cors(), middleware.checkToken, productsController.getProducts)
     .get('/products/:idProduct', productsController.getProductId)
     .post('/products', productsController.addProducts)
     .put('/products/:idProduct', productsController.editProduct)

@@ -8,6 +8,7 @@ module.exports = {
                 res.json({
                     status: 200,
                     message: 'success getting all data Categories from database',
+                    total_data: resultQuery.length,
                     data: resultQuery
                 })
             })
@@ -28,6 +29,7 @@ module.exports = {
                 res.json({
                     status: 200,
                     message: 'success getting data categori from database',
+                    total_data: resultQuery.length,
                     data: resultQuery
                 })
             })
@@ -41,8 +43,10 @@ module.exports = {
     },
     addCategori: (req, res) => {
         const { name } = req.body
-        const dateAdded = new Date()
-        const data = { name, dateAdded }
+        const data = {
+            name,
+            dateAdded: new Date()
+        }
 
         categoriModel.addCategori(data)
             .then(resultQuery => {
@@ -61,14 +65,14 @@ module.exports = {
             })
     },
     editCategori: (req, res) => {
-        const { idCategori } = req.params
+        const idCategori = req.params.idCategori
         const { name } = req.body
-        const dateUpdated = new Date()
+        const data = {
+            name,
+            dateUpdated: new Date()
+        }
 
-        const data = { name, dateUpdated }
-        const dataId = { idCategori }
-
-        categoriModel.editCategori(data, dataId)
+        categoriModel.editCategori(data, idCategori)
             .then(resultQuery => {
                 res.json({
                     status: 200,
@@ -85,15 +89,13 @@ module.exports = {
             })
     },
     deleteCategori: (req, res) => {
-        const { idCategori } = req.params
-        const data = idCategori
+        const idCategori = req.params.idCategori
 
-        categoriModel.deleteCategori(data)
+        categoriModel.deleteCategori(idCategori)
             .then(resultQuery => {
                 res.json({
                     status: 200,
                     message: 'success delete data categori',
-                    data
                 })
             })
             .catch(err => {

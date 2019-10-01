@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../configs/configs')
 const saltRounds = 10
-let status = 200
 const jwtPrivateKey = 'jwtsecret'
 
 
@@ -32,7 +31,6 @@ module.exports = {
 
         usersModel.cekEmail(email)
             .then(resultQuery => {
-
                 if (resultQuery.length === 0) {
                     bcrypt.genSalt(saltRounds, (err, salt) => {
                         bcrypt.hash(password, salt, (err, hash) => {
@@ -70,7 +68,7 @@ module.exports = {
             })
     },
     login: (req, res) => {
-        let email = req.body.email
+        const email = req.body.email
 
         usersModel.login(email)
             .then(resultQuery => {
@@ -83,7 +81,7 @@ module.exports = {
 
                     res.json({
                         status: 200,
-                        message: 'login ussec',
+                        message: 'login success',
                         data: {
                             email,
                             token
@@ -92,7 +90,7 @@ module.exports = {
                 } else {
                     res.json({
                         status: 400,
-                        message: 'invalid password'
+                        message: 'Password is incorrect'
                     })
                 }
             })
@@ -100,23 +98,23 @@ module.exports = {
                 console.log(err)
                 res.status(400).json({
                     status: 400,
-                    message: 'invalid email and password!'
+                    message: 'User or Password is incorrect!'
                 })
             })
 
     },
-    validateUser: (req, res, next) => {
-        const token = req.headers['x-access-token'] || req.headers['authorization'].split(" ")
+    // validateUser: (req, res, next) => {
+    //     const token = req.headers['x-access-token'] || req.headers['authorization'].split(" ")
 
-        jwt.verify(token[1], jwtPrivateKey, (err, decoded) => {
-            if (err) {
-                res.status(400).json({
-                    status: 400,
-                    message: 'Token not found!!!'
-                })
-            } else {
-                next()
-            }
-        })
-    }
+    //     jwt.verify(token[1], jwtPrivateKey, (err, decoded) => {
+    //         if (err) {
+    //             res.status(400).json({
+    //                 status: 400,
+    //                 message: 'Token not found!!!'
+    //             })
+    //         } else {
+    //             next()
+    //         }
+    //     })
+    // }
 }

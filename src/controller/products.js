@@ -20,6 +20,7 @@ module.exports = {
                 res.json({
                     status: 200,
                     message: 'success getting data products from database',
+                    total_data: resultQuery.length,
                     data: resultQuery
                 })
             })
@@ -40,6 +41,7 @@ module.exports = {
                 res.json({
                     status: 200,
                     message: 'success getting data product from database',
+                    total_data: resultQuery.length,
                     data: resultQuery
                 })
             })
@@ -54,14 +56,21 @@ module.exports = {
     addProducts: (req, res) => {
         const { name, description, idCategori, price, quantity } = req.body
         const productImage = req.files.image;
-        const dateAdded = new Date()
 
         if (productImage.mimetype === 'image/jpeg' || productImage.mimetype === 'image/png') {
             const image = Date.now() + '-' + productImage.name
 
             // Directori file upload
             productImage.mv('./src/uploads/' + image);
-            const data = { name, description, image, idCategori, price, quantity, dateAdded }
+            const data = {
+                name,
+                description,
+                image,
+                idCategori,
+                price,
+                quantity,
+                dateAdded: new Date()
+            }
 
             productModel.addProduct(data)
                 .then(resultQuery => {
@@ -94,7 +103,15 @@ module.exports = {
 
             // Directori file upload
             productImage.mv('./src/uploads/' + image);
-            const data = { name, description, image, idCategori, price, quantity, dateUpdated: new Date() }
+            const data = {
+                name,
+                description,
+                image,
+                idCategori,
+                price,
+                quantity,
+                dateUpdated: new Date()
+            }
 
             productModel.editProduct(data, idProduct)
                 .then(resultQuery => {
@@ -120,12 +137,12 @@ module.exports = {
     addProductQuantity: (req, res) => {
         const { idProduct } = req.params
         const { quantity } = req.body
-        const dateUpdated = new Date()
+        const data = {
+            quantity,
+            dateUpdated: new Date()
+        }
 
-        const data = { idProduct, quantity, dateUpdated }
-        const dataIdProduct = { idProduct }
-
-        productModel.addProductQuantity(quantity, dataIdProduct)
+        productModel.addProductQuantity(data, idProduct)
             .then(resultQuery => {
                 res.json({
                     status: 200,
@@ -141,35 +158,73 @@ module.exports = {
                 })
             })
     },
+    // reduceProductQuantity: (req, res) => {
+    //     const idProduct = req.params.idProduct
+    //     const { quantity } = req.body
+    //     const data = { idProduct, quantity }
+
+    //     productModel.reduceProductQuantity(idProduct, quantity)
+    //         .then(resultQuery => {
+    //             res.json({
+    //                 status: 200,
+    //                 message: 'success reduce quantity data product',
+    //                 data
+    //             })
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //             res.status(500).json({
+    //                 status: 500,
+    //                 message: 'erro reduce quantity data product',
+    //             })
+    //         })
+    // },
     reduceProductQuantity: (req, res) => {
-        const { idProduct } = req.params
-        const { quantity } = req.body
-        const dateUpdated = new Date()
+        const idProduct = req.params.idProduct
+        const quantity = req.body.quantity
+        const data = { idProduct, quantity }
 
-        const dataMessage = { idProduct, quantity, dateUpdated }
-        const dataIdProduct = { idProduct }
-
-        productModel.reduceProductQuantity(quantity, dataIdProduct)
+        productModel.getQuantity(idProduct)
             .then(resultQuery => {
-                res.json({
-                    status: 200,
-                    message: 'success reduce quantity data product',
-                    dataMessage: resultQuery
-                })
+                const quantityProduct = resultQuery[0].quantity
+                const totalQuantity = quantityProduct - quantity
+
+                if (totalQuantity >= 0) {
+                    productModel.reduceProductQuantity(idProduct, totalQuantity)
+                        .then(resultQuery => {
+                            res.json({
+                                status: 200,
+                                message: 'Success Reduce Product....'
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            res.status(500).json({
+                                status: 500,
+                                message: 'erro reduce product'
+                            })
+                        })
+                } else {
+                    res.status(400).json({
+                        status: 400,
+                        message: 'Can not quantity below 0 ',
+                        data
+                    })
+                }
             })
             .catch(err => {
                 console.log(err)
                 res.status(500).json({
                     status: 500,
-                    message: 'erro reduce quantity data product'
+                    message: 'erro get quantity reduce product'
+
                 })
             })
     },
     deleteProduct: (req, res) => {
         const { idProduct } = req.params
-        const data = idProduct //ini yang buat prepared statement
 
-        productModel.deleteProduct(data)
+        productModel.deleteProduct(idProduct)
             .then(resultQuery => {
                 res.json({
                     status: 200,
