@@ -4,9 +4,20 @@ module.exports = {
     // get product using promise
     getProducts: (data) => {
         const sortName = data.search.replace(/'/g, "%")
-
         return new Promise((resolve, reject) => {
             conn.query(`SELECT a.idProduct, a.name, a.description, a.image, b.name AS categoritu, a.price, a.quantity, a.dateAdded, a.dateUpdated  FROM products a INNER JOIN categories b ON a.idCategori = b.idCategori AND a.name LIKE '${sortName}' ORDER BY ${data.sorting} LIMIT ${data.off},${data.lim}`,
+                (err, result) => {
+                    if (!err) {
+                        resolve(result)
+                    } else {
+                        reject(err)
+                    }
+                })
+        })
+    },
+    getTotalAllData: () => {
+        return new Promise((resolve, reject) => {
+            conn.query(`SELECT COUNT(idProduct) as totalDataProduct FROM products`,
                 (err, result) => {
                     if (!err) {
                         resolve(result)
@@ -72,28 +83,6 @@ module.exports = {
             })
         })
     },
-    // reduceProductQuantity: (idProduct, quantity) => {
-    //     return new Promise((resolve, reject) => {
-
-    //         conn.query('SELECT quantity FROM products WHERE idProduct = ? ', idProduct, (err, result) => {
-
-    //             const numQuantity = result[0].quantity - quantity
-
-    //             if (numQuantity >= 0) {
-    //                 conn.query(`UPDATE products SET quantity = ?, dateUpdated=? WHERE idProduct = ?`, [numQuantity, new Date, idProduct], (err, result) => {
-    //                     if (!err) {
-    //                         resolve(result)
-    //                     } else {
-    //                         reject(err)
-    //                     }
-    //                 })
-    //             } else {
-    //                 reject('cannot Quantity below 0')
-    //             }
-
-    //         })
-    //     })
-    // },
     reduceProductQuantity: (idProduct, quantity) => {
         return new Promise((resolve, reject) => {
             conn.query('UPDATE products SET quantity = ? WHERE idProduct = ?', [quantity, idProduct], (err, result) => {

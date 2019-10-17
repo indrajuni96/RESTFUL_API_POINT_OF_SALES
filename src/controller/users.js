@@ -1,11 +1,10 @@
-// import model
+// import require 
 const usersModel = require('../models/users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../configs/configs')
 const saltRounds = 10
 const jwtPrivateKey = 'jwtsecret'
-
 
 module.exports = {
     getUsers: (req, res) => {
@@ -102,19 +101,5 @@ module.exports = {
                 })
             })
 
-    },
-    // validateUser: (req, res, next) => {
-    //     const token = req.headers['x-access-token'] || req.headers['authorization'].split(" ")
-
-    //     jwt.verify(token[1], jwtPrivateKey, (err, decoded) => {
-    //         if (err) {
-    //             res.status(400).json({
-    //                 status: 400,
-    //                 message: 'Token not found!!!'
-    //             })
-    //         } else {
-    //             next()
-    //         }
-    //     })
-    // }
+    }
 }

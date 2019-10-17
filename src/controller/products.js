@@ -10,17 +10,19 @@ module.exports = {
         req.query.byProduct && req.query.sort ? sorting = `a.${req.query.byProduct} ${req.query.sort}` : sorting = `a.idProduct`
 
         let page = (req.query.pages) ? pages = parseInt(req.query.pages, 10) : pages = 1
-        let off = ((page - 1) * 5)
-        let lim = (req.query.pages) ? 5 : 20
-
+        let lim = 6
+        let off = ((page - 1) * lim)
         const data = { search, sorting, off, lim }
 
         productModel.getProducts(data)
-            .then(resultQuery => {
+            .then(async resultQuery => {
+                let totalDataProduct = await productModel.getTotalAllData()
+                const total_pages = Math.ceil(totalDataProduct[0].totalDataProduct / lim)
                 res.json({
                     status: 200,
                     message: 'success getting data products from database',
                     total_data: resultQuery.length,
+                    total_pages,
                     data: resultQuery
                 })
             })
@@ -158,27 +160,6 @@ module.exports = {
                 })
             })
     },
-    // reduceProductQuantity: (req, res) => {
-    //     const idProduct = req.params.idProduct
-    //     const { quantity } = req.body
-    //     const data = { idProduct, quantity }
-
-    //     productModel.reduceProductQuantity(idProduct, quantity)
-    //         .then(resultQuery => {
-    //             res.json({
-    //                 status: 200,
-    //                 message: 'success reduce quantity data product',
-    //                 data
-    //             })
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //             res.status(500).json({
-    //                 status: 500,
-    //                 message: 'erro reduce quantity data product',
-    //             })
-    //         })
-    // },
     reduceProductQuantity: (req, res) => {
         const idProduct = req.params.idProduct
         const quantity = req.body.quantity
@@ -228,8 +209,7 @@ module.exports = {
             .then(resultQuery => {
                 res.json({
                     status: 200,
-                    message: 'success delete data product',
-                    data
+                    message: 'success delete data product'
                 })
             })
             .catch(err => {
