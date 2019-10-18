@@ -7,6 +7,7 @@ module.exports = {
         if (req.headers['x-access-token']) {
             token = req.headers['x-access-token']
         } else {
+            console.log(req.headers.authorization)
             token = req.headers.authorization.split(" ")[1]
         }
 

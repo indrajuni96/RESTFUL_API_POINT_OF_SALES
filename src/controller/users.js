@@ -1,6 +1,6 @@
 // import require 
 const usersModel = require('../models/users')
-const bcrypt = require('bcrypt')
+const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('../configs/configs')
 const saltRounds = 10
@@ -31,8 +31,8 @@ module.exports = {
         usersModel.cekEmail(email)
             .then(resultQuery => {
                 if (resultQuery.length === 0) {
-                    bcrypt.genSalt(saltRounds, (err, salt) => {
-                        bcrypt.hash(password, salt, (err, hash) => {
+                    bcryptjs.genSalt(saltRounds, (err, salt) => {
+                        bcryptjs.hash(password, salt, (err, hash) => {
                             const data = { email, password: hash }
 
                             usersModel.register(data)
@@ -75,7 +75,7 @@ module.exports = {
                 const passwordHash = resultQuery[0].password
                 const password = req.body.password
 
-                if (bcrypt.compareSync(password, passwordHash)) {
+                if (bcryptjs.compareSync(password, passwordHash)) {
                     const token = jwt.sign({ idUser: idUser }, jwtPrivateKey, { expiresIn: '1h' })
 
                     res.json({
