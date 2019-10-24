@@ -52,23 +52,20 @@ $ npm start
 ---
 
 ## Dependencies
-- mysql
-- morgan
-- bcrypt
-- body-parser
-- cors
-- dotenv
-- express
-- express-fileupload
-- jsonwebtoken
 
+| Plugin |
+| ------ |
+| express |
+| express-fileupload |
+| mysql |
+| bcryptjs |
+| body-parser |
+| cors |
+| dotenv |
+| jsonwebtoken |
+| morgan |
 
-
-
-
-
-
-## Route
+## API Route URL
 
 - Users
   - (POST) http://localhost:4000/users/register Register users
@@ -88,3 +85,8 @@ $ npm start
   - (POST) http://localhost:4000/api/v1/products/ Add data product
   - (PUT) http://localhost:4000/api/v1/products/6 Edit data product
   - (DELETE) http://localhost:4000/api/v1/products/6 Delete data product
+
+License
+----
+
+© Indra Juniyanto
