@@ -49,7 +49,7 @@ $ nano .env
 ```bash
 $ npm start
 ```
----
+--- 
 
 ## Dependencies
 
